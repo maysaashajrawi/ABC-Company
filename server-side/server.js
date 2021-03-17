@@ -1,6 +1,6 @@
 const express    = require("express");
 const cors       = require('cors');
-const path = require('path');
+
 const connection = require("./app/models/database")
 require("dotenv").config();
 
@@ -28,13 +28,6 @@ app.use("/complaint" , complaint);
 
 // set the port
 const port = process.env.PORT || 5000;
-//  react side
-app.use(express.static(path.join(__dirname, 'build')));
-
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 app.listen(port,()=>{
     console.log(`Server listening on port ${port}`)

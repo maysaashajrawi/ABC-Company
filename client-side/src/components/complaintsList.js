@@ -16,6 +16,7 @@ const Complaint = (props)=>(
             <p className="card-text">{props.complaint.description}</p>
             <h6>Country: </h6>
             <p className="card-text">{props.complaint.country}</p>
+            {console.log(props.complaint)}
             
             {/* buttons for update the complaint status */}
             <button type="button" className="btn btn-success"  onClick={() =>{props.updateComplaint("Resolved",props.complaint.complaintId)  }}>Resolved</button>
@@ -46,7 +47,9 @@ class ComplaintsList extends React.Component{
         status = status.replace(/['"]+/g, '');
         console.log(status)
         axios.post(`http://localhost:5000/complaint/updateComplaint/${status}/${complaintId}`)
-        .then((res)=>{console.log(res)})
+        .then((res)=>{
+            window.location.href=`/complaints`;
+        })
         .catch((err)=>{console.log(err)})
     }
 

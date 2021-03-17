@@ -8,7 +8,7 @@ module.exports = {
         })
     },
     getAllComplaints:(callback)=>{
-        const getQuery = "select complaints.type,complaints.description,complaints.title, complaints.status,complaints.country,users.userName FROM complaints  inner join users  on complaints.user_ID = users.userId  where status != 'Resolved' and status != 'Dismissed'";
+        const getQuery = "select complaints.complaintId,complaints.type,complaints.description,complaints.title, complaints.status,complaints.country,users.userName FROM complaints  inner join users  on complaints.user_ID = users.userId  where status != 'Resolved' and status != 'Dismissed'";
         
         db.query(getQuery,(err,result)=>{
             callback(err,result)
@@ -22,6 +22,7 @@ module.exports = {
         })
     },
     updateComplaint:(params,callback)=>{
+        console.log("helloooooooooo")
         const updateQuery = "UPDATE complaints SET status=? WHERE complaintId = ? ";
         db.query(updateQuery,params,function(err,result){
             callback(err,result)
