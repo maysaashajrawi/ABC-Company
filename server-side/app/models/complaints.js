@@ -8,7 +8,7 @@ module.exports = {
         })
     },
     getAllComplaints:(callback)=>{
-        const getQuery = "select * FROM complaints where status != 'Resolved' and status != 'Dismissed'";
+        const getQuery = "select complaints.type,complaints.description,complaints.title, complaints.status,complaints.country,users.userName FROM complaints  inner join users  on complaints.user_ID = users.userId  where status != 'Resolved' and status != 'Dismissed'";
         
         db.query(getQuery,(err,result)=>{
             callback(err,result)
@@ -16,7 +16,7 @@ module.exports = {
     },
     
     createComplaint:(params,callback)=>{
-        const insertQuery = "INSERT INTO complaints (title,description,date,type,status,user_ID)VALUES(?,?,?,?,'pending resolution',?)";
+        const insertQuery = "INSERT INTO complaints (title,description,date,type,status,user_ID,country)VALUES(?,?,?,?,'pending resolution',?,?)";
         db.query(insertQuery,params,(err,result)=>{
             callback(err,result)
         })

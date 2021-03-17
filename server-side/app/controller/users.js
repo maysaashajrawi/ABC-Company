@@ -24,8 +24,9 @@ module.exports={
     // for login
     logIn:async(req,res)=>{
         //values came from body (form)
-        var params = [req.body.userName,req.body.password];
-        var userName = req.body.userName;
+        
+        var params = [req.body.email,req.body.password];
+        var email = req.body.email;
         userModel.logIn(params , async function(err,result){
             //check if found the user on db    
             if(result.length>0){
@@ -43,7 +44,7 @@ module.exports={
                     
 
                     // if password valid have to generate token 
-                    const user = { name : userName};
+                    const user = { email : email};
                     const token =jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
                     res.header("token", token).send({"token": token , "role":role ,"userId" : dbUserId});
                     // res.header("role", role).send({"role": role});

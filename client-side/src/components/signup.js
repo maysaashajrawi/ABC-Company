@@ -1,104 +1,97 @@
 import React from 'react';
 import axios from 'axios';
-class Singup extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            userName : '',
-            email    : '',
-            role     : '',
-            password : '',
-            phone    :''
+import {useForm} from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-        }
-        //to bind this to the functions
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+
+const schema = yup.object().shape({
+    userName: yup.string().min(4).max(15).required("User Name should be required please"),
+    email: yup.string().email().required(),
+    role: yup.string().required(),
+    password: yup.string().min(4).max(15).required(),
+    phone: yup.number().required(),
+});
+
+function Singup(){
+    const { register, handleSubmit, errors } = useForm({
+        resolver: yupResolver(schema),
+    });
+    const submitForm =(data)=>{
+        console.log(data)
+        axios.post('http://localhost:5000/users/createUser',data)
+            .then((res)=>{
+                window.location = '/logIn';
+            })
+            .catch((err)=>{console.log(err)});
     }
     
-    handleChange(event){
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
-        
-    }
-    handleSubmit(e){
-        e.preventDefault();
-        const user={
-            userName : this.state.userName,
-            email    : this.state.email,
-            role     : this.state.role,
-            password : this.state.password,
-            phone    : this.state.phone 
-        }
-        axios.post('http://localhost:5000/users/createUser',user)
-        .then((res)=>{
-            window.location = '/logIn';
-        })
-        .catch((err)=>{console.log(err)});
-
-
-    }
-    render(){
+    
         return(
             <div className="container">
-                <div className = "signUp-form">
-                    <h3>Create User</h3>
+                <div className="row">
+                    <div className="col-md-2"></div>
+                    <div className="col-md-8">
+                    <div className = "signUp-form">
+                    <h3 className="text-center">Create User</h3>
                     
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={handleSubmit(submitForm)}>
                         <div className="form-group">
                             <label>
                                 User Name:
-                                <input type="text" min="3" name="userName" className="form-control" value={this.state.userName} onChange={this.handleChange} required />
+                                <input type="text" name="userName" className="form-control" ref={register} required />
                             </label>
+                            <p> {errors.userName?.message} </p>
                         </div>
                         <div className="form-group">
                             <label>
                                 Email:
-                                <input type="email" min="3" name="email" className="form-control" value={this.state.email} onChange={this.handleChange} required/>
+                                <input type="email" min="3" name="email" className="form-control" ref={register} required/>
                             </label>
+                            <p> {errors.email?.message} </p>
                         </div>
                         <div className="form-group">
                             <label>
                                 Role:
-                                <select value={this.state.role} name="role" className="form-control" onChange={this.handleChange} required>
+                                <select  name="role" className="form-control" ref={register}required>
                                 <option value=" "> </option>
                                     <option value="Admin">Admin</option>
                                     <option value="customer">customer</option>
                                 </select>
                             </label>
+                            <p> {errors.role?.message} </p>
                         </div>
                         <div className="form-group">
                             <label>
                                 Password:
-                                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.handleChange} required/>
+                                <input type="password" name="password" className="form-control" ref={register} required/>
                             </label>
+                            <p> {errors.password?.message} </p>
                         </div>
                         <div className="form-group">
                             <label>
                                 Phone:
-                                <input type="number" name="phone" className="form-control"  value={this.state.phone} onChange={this.handleChange} required/>
+                                <input type="number" name="phone" className="form-control"  ref={register} required/>
                             </label>
+                            <p> {errors.phone?.message} </p>
+                            {/* <p> {errors.phone &&"phone should be at least 10 numbers"} </p> */}
                         </div>
 
 
-                        <div className="form-group">
-                            <input type="submit" className="form-control" value="Submit" />
-                        </div>
+                    
+                            <input type="submit" className=" btn btn-dark" value="SignUp" />
+                        
                     
                     </form>
 
-                    <div>
-                            <button>LogIn</button>
-                    </div>
                 </div>
 
+                    </div>
+                </div>
+                
 
             </div>
         )
-    }
+    
 }
 export default Singup;

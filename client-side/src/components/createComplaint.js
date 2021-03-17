@@ -9,8 +9,8 @@ class CreateComplaint extends React.Component{
             description:'',
             date:'',
             type:'',
-            // status:'',
-            user_ID:''
+            country:''
+            
         }
 
         //to bind this to the functions
@@ -33,12 +33,12 @@ class CreateComplaint extends React.Component{
             description:this.state.description,
             date:this.state.date,
             type:this.state.type,
-            // status:this.state.status,
-            // user_ID:this.state.user_ID 
+            country:this.state.country
         }
         let id = localStorage.getItem('userId');
         axios.post(`http://localhost:5000/complaint/createComplaint/${id}`,complaint)
-        .then((res)=>{console.log(res.data)})
+        .then((res)=>{
+            window.location = "/userComplaints"})
         .catch((err)=>{console.log(err)})
     }
     render(){
@@ -72,19 +72,30 @@ class CreateComplaint extends React.Component{
                             <div className="form-group">
                                 <label>
                                     Type:
-                                    <input type="text" className="form-control"  name="type"  value={this.state.type} onChange={this.handleChange} required/>
+                                <select  name="type" className="form-control"  value={this.state.type} onChange={this.handleChange} required>
+                                    <option value=" "> </option>
+                                    <option value="food">food</option>
+                                    <option value="clean">clean</option>
+                                    <option value="delay">delay</option>
+                                    <option value="services">services</option>
+                                    <option value="product">product</option>
+                                </select>
                                 </label>
                             </div>
-                            {/* <div className="form-group">
-                                <label>
-                                    Status:
-                                    <input type="text" className="form-control" name="status"  value={this.state.status} onChange={this.handleChange} required/>
-                                </label>
-                            </div> */}
-
-
                             <div className="form-group">
-                                <input type="submit" className="form-control" value="Submit" />
+                                <label>
+                                Country:
+                                <select  name="country" className="form-control"  value={this.state.country} onChange={this.handleChange} required>
+                                    <option value=" "> </option>
+                                    <option value="Amman">Amman</option>
+                                    <option value="Zarqa">Zarqa</option>
+                                    <option value="Irbid">Irbid</option>
+                                    <option value="Mafraq">Mafraq</option>
+                                </select>
+                                </label>
+                            </div>
+                            <div className="form-group">
+                                <input type="submit" className="btn btn-dark" value="Create Complaint" />
                             </div>
                         
                         </form>

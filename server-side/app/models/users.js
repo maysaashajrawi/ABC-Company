@@ -7,7 +7,8 @@ module.exports={
         })
     },
     logIn:(params,callback)=>{
-        var loginQuery = "SELECT * FROM users WHERE userName = ?";
+        
+        var loginQuery = "SELECT * FROM users WHERE email = ?";
         db.query(loginQuery,params,function(err,result){
             callback(err,result);
         })

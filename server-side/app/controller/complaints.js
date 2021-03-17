@@ -21,7 +21,7 @@ module.exports = {
     //create new complaint
     createComplaint :(req,res)=>{
         //params here get data from body (form)
-        const params =[req.body.title,req.body.description,req.body.date,req.body.type,req.params.id];
+        const params =[req.body.title,req.body.description,req.body.date,req.body.type,req.params.id,req.body.country];
         complaintModel.createComplaint(params,function(err,result){
             if(err) console.log(err)
             res.send(result)

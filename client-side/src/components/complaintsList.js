@@ -8,10 +8,14 @@ const Complaint = (props)=>(
         </div>
         <div className="card-body">
             <h4 className="card-title">Complaint Details</h4>
+            <h6>Customer Name: </h6>
+            <p className="card-text">{props.complaint.userName}</p>
             <h6>Complaint Type: </h6>
             <p className="card-text" >{props.complaint.type}</p>
             <h6>Complaint description: </h6>
             <p className="card-text">{props.complaint.description}</p>
+            <h6>Country: </h6>
+            <p className="card-text">{props.complaint.country}</p>
             
             {/* buttons for update the complaint status */}
             <button type="button" className="btn btn-success"  onClick={() =>{props.updateComplaint("Resolved",props.complaint.complaintId)  }}>Resolved</button>
