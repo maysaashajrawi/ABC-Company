@@ -36,7 +36,13 @@ class CreateComplaint extends React.Component{
             country:this.state.country
         }
         let id = localStorage.getItem('userId');
-        axios.post(`http://localhost:5000/complaint/createComplaint/${id}`,complaint)
+        var token = localStorage.getItem("token")
+        var role = localStorage.getItem("role")
+        const options = {
+            headers: {'token': token ,
+                    'role' :role  }
+            };
+        axios.post(`http://localhost:5000/complaint/createComplaint/${id}`,complaint,options)
         .then((res)=>{
             window.location = "/userComplaints"})
         .catch((err)=>{console.log(err)})

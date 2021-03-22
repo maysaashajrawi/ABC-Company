@@ -1,5 +1,6 @@
 const complaintModel = require('../models/complaints');
 module.exports = {
+    
     getAllComplaints :(req,res)=>{
         // get all complaints for all user to admin to resolve them
         complaintModel.getAllComplaints(function(err,result){
@@ -30,7 +31,6 @@ module.exports = {
     //update the complaint status
     updateComplaint:(req,res)=>{
         const params =[req.params.status,req.params.id];
-        console.log(params)
         complaintModel.updateComplaint(params,function(err,result){
             if(err) console.log(err)
             res.send("status updated")

@@ -29,8 +29,14 @@ class UserComplaints extends React.Component{
 
     }
     componentDidMount(){
-        let id = localStorage.getItem('userId')
-        axios.get(`http://localhost:5000/complaint/getUserComplaints/${id}`)
+        let id = localStorage.getItem('userId');
+        var token = localStorage.getItem("token")
+        var role = localStorage.getItem("role")
+        const options = {
+            headers: {'token': token ,
+                    'role' :role  }
+        };
+        axios.get(`http://localhost:5000/complaint/getUserComplaints/${id}`,options)
         .then((res)=> this.setState({complaints:res.data}))
         .catch((err)=> console.log(err))
     }

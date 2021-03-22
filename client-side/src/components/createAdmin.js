@@ -12,14 +12,21 @@ const schema = yup.object().shape({
     phone: yup.number().required(),
 });
 
-function Singup(){
+function CreateAdmin(){
     const { register, handleSubmit, errors } = useForm({
         resolver: yupResolver(schema),
     });
+    
+    var token = localStorage.getItem("token")
+    var role = localStorage.getItem("role")
+    const options = {
+        headers: {'token': token ,
+                'role' :role  }
+    };
     const submitForm =(data)=>{
-        axios.post('http://localhost:5000/users/createUser',data)
+        axios.post('http://localhost:5000/users/createAdmin',data,options)
             .then((res)=>{
-                window.location = '/logIn';
+                window.location = '/createAdmin';
             })
             .catch((err)=>{console.log(err)});
     }
@@ -31,7 +38,7 @@ function Singup(){
                     <div className="col-md-2"></div>
                     <div className="col-md-8">
                     <div className = "signUp-form">
-                    <h3 className="text-center">Signup</h3>
+                    <h3 className="text-center">Create Admin</h3>
                     
                     <form onSubmit={handleSubmit(submitForm)}>
                         <div className="form-group">
@@ -81,4 +88,4 @@ function Singup(){
         )
     
 }
-export default Singup;
+export default CreateAdmin;

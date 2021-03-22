@@ -11,7 +11,6 @@ const connection = mysql.createPool({
 });
 connection.query("select 1+1",(err,row)=>{
     if(err) throw err;
-    console.log("connected! :)");
 })
 module.exports = connection;
 

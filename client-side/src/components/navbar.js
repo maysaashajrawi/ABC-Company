@@ -8,6 +8,8 @@ export default function Navbar(){
         var isAdmin = true;
     }else if(localStorage.getItem('role') === 'customer'){
         var isCustomer = true;
+    }else if(localStorage.getItem('role') === 'superAdmin'){
+        var isSuperAdmin = true;
     }else{
         var notAuth = true
     }
@@ -38,6 +40,12 @@ export default function Navbar(){
 
                     <li className="navbar-item">          
                         { isAdmin && <Link to="/complaints" className="nav-link" >Complaints</Link>}      
+                    </li>
+                    <li className="navbar-item">          
+                        { isSuperAdmin && <Link to="/createAdmin" className="nav-link" >Create Admin</Link>}      
+                    </li>
+                    <li className="navbar-item">          
+                        { isSuperAdmin &&<Link to="/home" className="nav-link" onClick={logOut}>Logout</Link>}      
                     </li>
                     <li className="navbar-item">          
                         { isAdmin &&<Link to="/home" className="nav-link" onClick={logOut}>Logout</Link>}      

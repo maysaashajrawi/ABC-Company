@@ -11,8 +11,25 @@ module.exports={
             //hash password and merge it with salt 
             const hashedPassword = await bcrypt.hash(req.body.password,salt);
 
-            let params =[req.body.userName,req.body.email,req.body.role,hashedPassword,req.body.phone];
+            let params =[req.body.userName,req.body.email,hashedPassword,req.body.phone];
             userModel.createUser(params,function(err,results){
+                if(err) console.log("you are have an error in users controller", err);
+                res.send(results)
+            })
+        }
+        catch{
+            res.status(500).send();
+        }
+    },
+    createAdmin:async(req,res)=>{
+        try{
+            //generate salt to change the hash passowrd every time 
+            const salt = await bcrypt.genSalt();
+            //hash password and merge it with salt 
+            const hashedPassword = await bcrypt.hash(req.body.password,salt);
+
+            let params =[req.body.userName,req.body.email,hashedPassword,req.body.phone];
+            userModel.createAdmin(params,function(err,results){
                 if(err) console.log("you are have an error in users controller", err);
                 res.send(results)
             })
@@ -46,6 +63,10 @@ module.exports={
                     // if password valid have to generate token 
                     const user = { email : email};
                     const token =jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
+            
+                    res.setHeader("token", token);
+
+                    res.setHeader("role", role);
                     res.header("token", token).send({"token": token , "role":role ,"userId" : dbUserId});
                     // res.header("role", role).send({"role": role});
 

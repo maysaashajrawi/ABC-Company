@@ -7,6 +7,7 @@ require("dotenv").config();
 const users   = require("./app/routes/users");
 const complaint   = require("./app/routes/complaint");
 
+
 const app = express();
 //define Cross-origin resource sharing
 app.use(cors());
@@ -23,6 +24,8 @@ app.use("/users" , users);
 
 // define complaint route(middleware)  
 app.use("/complaint" , complaint);
+
+
 
 
 

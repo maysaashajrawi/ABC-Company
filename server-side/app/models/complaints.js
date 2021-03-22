@@ -22,7 +22,6 @@ module.exports = {
         })
     },
     updateComplaint:(params,callback)=>{
-        console.log("helloooooooooo")
         const updateQuery = "UPDATE complaints SET status=? WHERE complaintId = ? ";
         db.query(updateQuery,params,function(err,result){
             callback(err,result)

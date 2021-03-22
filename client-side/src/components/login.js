@@ -34,13 +34,12 @@ class Login extends React.Component{
             localStorage.setItem('userId' , res.data.userId)
             localStorage.setItem('role' , res.data.role)
             localStorage.setItem('token' , res.data.token)
-            console.log("role",localStorage.getItem('role'))
             if(localStorage.getItem('token') && localStorage.getItem('role') === 'customer'){
-                
-                console.log(res.data.token)
                 window.location= `/createComplaint`;
             }else if(localStorage.getItem('token') && localStorage.getItem('role') === 'Admin'){
                 window.location.href = `/complaints`;
+            }else if(localStorage.getItem('token') && localStorage.getItem('role') === 'superAdmin'){
+                window.location.href = `/createAdmin`;
             }else{
                 window.location.href = `/logIn`;
             }
@@ -60,7 +59,7 @@ class Login extends React.Component{
                 <div className = "col-md-2"></div>
                 <div className ="col-md-8">
                 <div className = "LogIn-form">
-                    <h3>Login</h3>
+                    <h3 className="text-center">Login</h3>
                     
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">

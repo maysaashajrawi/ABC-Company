@@ -16,7 +16,6 @@ const Complaint = (props)=>(
             <p className="card-text">{props.complaint.description}</p>
             <h6>Country: </h6>
             <p className="card-text">{props.complaint.country}</p>
-            {console.log(props.complaint)}
             
             {/* buttons for update the complaint status */}
             <button type="button" className="btn btn-success"  onClick={() =>{props.updateComplaint("Resolved",props.complaint.complaintId)  }}>Resolved</button>
@@ -36,21 +35,34 @@ class ComplaintsList extends React.Component{
         this.updateComplaint = this.updateComplaint.bind(this);
         
     }
+  
     componentDidMount(){
-        axios.get(`http://localhost:5000/complaint/getAllComplaints`)
+        var token = localStorage.getItem("token")
+        var role = localStorage.getItem("role")
+        var options = {
+            headers: {'token': token ,
+                    'role' :role  }
+        };
+        axios.get(`http://localhost:5000/complaint/getAllComplaints`,options)
         .then((res)=>{
             this.setState({complaints:res.data})
         })
         .catch((err)=> console.log(err))
     }
+
     updateComplaint(status,complaintId){
         status = status.replace(/['"]+/g, '');
-        console.log(status)
-        axios.post(`http://localhost:5000/complaint/updateComplaint/${status}/${complaintId}`)
+        var token = localStorage.getItem("token")
+        var role = localStorage.getItem("role")
+        var options = {
+            headers: {'token': token ,
+                    'role' :role  }
+        };
+        axios.post(`http://localhost:5000/complaint/updateComplaint/${status}/${complaintId}`,options)
         .then((res)=>{
             window.location.href=`/complaints`;
         })
-        .catch((err)=>{console.log(err)})
+        .catch((err)=>{console.log(err,"errrrrrrrrrrrr")})
     }
 
     myComplaintsList(){

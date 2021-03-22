@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router,Route} from   "react-router-dom";
@@ -10,21 +9,9 @@ import CreateComplaint from './components/createComplaint';
 import UserComplaints from './components/userComplant';
 import ComplaintsList from './components/complaintsList';
 import ProtectedRoute from './components/protectedRoute';
-import Singup from './components/signup';
+import CreateAdmin from './components/createAdmin';
 import './App.css';
 function App() {
-  
-  Axios({
-    method: "GET",
-    url: "http://localhost:5000/",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(res => {
-    console.log(res.data.message);
-  });
-
-
   return (
     <Router>
       <Navbar/>
@@ -36,6 +23,7 @@ function App() {
         <ProtectedRoute path="/createComplaint" exact component={CreateComplaint}></ProtectedRoute>
         <ProtectedRoute path="/userComplaints" exact component={UserComplaints}></ProtectedRoute>
         <ProtectedRoute path="/complaints" exact component={ComplaintsList}></ProtectedRoute>
+        <ProtectedRoute path="/createAdmin" exact component={CreateAdmin}></ProtectedRoute>
         
       
       </div>
